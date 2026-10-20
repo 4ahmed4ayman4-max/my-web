@@ -1,0 +1,24 @@
+﻿namespace Business.DTOs.Common;
+
+public class PagedResultDto<T>
+{
+    public List<T> Items { get; set; } = new();
+    public int PageNumber { get; set; }
+    public int PageSize { get; set; }
+    public int TotalCount { get; set; }
+    public int TotalPages => PageSize > 0
+        ? (int)Math.Ceiling(TotalCount / (double)PageSize)
+        : 0;
+    public bool HasPrevious => PageNumber > 1;
+    public bool HasNext => PageNumber < TotalPages;
+
+    public PagedResultDto() { }
+
+    public PagedResultDto(List<T> items, int totalCount, int pageNumber, int pageSize)
+    {
+        Items = items;
+        TotalCount = totalCount;
+        PageNumber = pageNumber;
+        PageSize = pageSize;
+    }
+}
